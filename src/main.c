@@ -6,7 +6,9 @@
 typedef unsigned char uint8_t;
 
 uint8_t playerX = 80;
+uint8_t playerSubX = 0;
 uint8_t playerY = 80;
+uint8_t playerSubY = 0;
 uint8_t playerDirection = 0;
 
 uint8_t playerTurnCooldown = 0;
@@ -92,6 +94,39 @@ void draw_player()
 
 }
 
+void move_player(uint8_t pad)
+{
+    uint8_t x, y;
+    if(pad & J_LEFT) {
+        x = playerSubX - PLAYER_SPEED_X;
+        if (x > playerSubX) {
+            playerX--;
+        }
+        playerSubX = x;
+    } else if (pad & J_RIGHT) {
+        x = playerSubX + PLAYER_SPEED_X;
+        if (x < playerSubX) {
+            playerX++;
+        }
+        playerSubX = x;
+    }
+
+    if(pad & J_UP) {
+        y = playerSubY - PLAYER_SPEED_Y;
+        if (y > playerSubY) {
+            playerY--;
+        }
+        playerSubY = y;
+    } else if (pad & J_DOWN) {
+        y = playerSubY + PLAYER_SPEED_Y;
+        if (y < playerSubY) {
+            playerY++;
+        }
+        playerSubY = y;
+    }
+        
+}
+
 void main(void)
 {
     init();
@@ -100,6 +135,7 @@ void main(void)
         uint8_t pad = joypad();
         
         turn_player(pad);
+        move_player(pad);
         draw_player();
         
         // do collision detection

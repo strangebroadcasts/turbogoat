@@ -8,4 +8,7 @@
 #define TURN_COOLDOWN_TIME 10
 #define BULLET_COOLDOWN_TIME 10
 
+#define PLAYER_SPEED_X 80
+#define PLAYER_SPEED_Y 80
+
 #endif
