@@ -1,10 +1,6 @@
 #include <gb/gb.h>
 
-#include "sprites/player.h"
-#define PLAYER_TILE_START 0
-#define PLAYER_TILE_END 16
-#define PLAYER_SPRITE_START 0
-#define PLAYER_SPRITE_END 16
+#include "sprites.h"
 
 typedef unsigned char uint8_t;
 
@@ -19,14 +15,15 @@ void init()
     SPRITES_8x8;
     DISPLAY_OFF;
 
-    // load images here:
-    set_sprite_data(PLAYER_TILE_START, sizeof(PLAYER_TILES) / 8, PLAYER_TILES);
-    
     // Let palette 1 have light grey as the transparent color:
     OBP1_REG = 0xe1;
+    
+    // load images here:
+    set_sprite_data(PLAYER_TILE_START, sizeof(PLAYER_TILES) / 8, PLAYER_TILES);
+    set_sprite_data(BULLET_TILES_START, 2, BULLET_TILES);
+    set_sprite_data(ENEMY_TILES_START, 4, ENEMY_TILES);    
 
     update_player_tiles();
-
 
     DISPLAY_ON;
 

@@ -1,6 +1,6 @@
 CC	= /opt/gbdk/bin/lcc -Wa-l -Wl-m -Wl-j
 
-SPRITES = sprites/player.o sprites/bullet.o
+SPRITES = sprites/player.o sprites/bullet.o sprites/enemy.o
 
 .PHONY: all clean build game
 all: build
