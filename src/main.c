@@ -21,7 +21,7 @@ void init()
     // load images here:
     set_sprite_data(PLAYER_TILE_START, sizeof(PLAYER_TILES) / 8, PLAYER_TILES);
     set_sprite_data(BULLET_TILES_START, 2, BULLET_TILES);
-    set_sprite_data(ENEMY_TILES_START, 4, ENEMY_TILES);    
+    set_sprite_data(ENEMY_TILES_START, ENEMY_TILES_COUNT, ENEMY_TILES);    
 
     update_player_tiles();
 

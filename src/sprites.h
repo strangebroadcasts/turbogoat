@@ -17,6 +17,7 @@
 #include "sprites/enemy.h"
 
 #define ENEMY_TILES_START 130
-#define ENEMY_TILES_END 134
+#define ENEMY_TILES_END 132
+#define ENEMY_TILES_COUNT 2
 
 #endif
