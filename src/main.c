@@ -1,12 +1,15 @@
 #include <gb/gb.h>
 
 #include "sprites.h"
+#include "constants.h"
 
 typedef unsigned char uint8_t;
 
 uint8_t playerX = 80;
 uint8_t playerY = 80;
 uint8_t playerDirection = 0;
+
+uint8_t playerTurnCooldown = 0;
 
 void update_player_tiles();
 
@@ -49,6 +52,11 @@ void update_player_tiles()
 
 void turn_player(uint8_t pad)
 {
+    if(playerTurnCooldown > 0) {
+        playerTurnCooldown--;
+        return;
+    }
+
     if(pad & J_A) {
         if (playerDirection == 7) {
             playerDirection = 0;
@@ -56,15 +64,15 @@ void turn_player(uint8_t pad)
             playerDirection++;
         }
         update_player_tiles();
-    }
-
-    if(pad & J_B) {
+        playerTurnCooldown = TURN_COOLDOWN_TIME;
+    } if(pad & J_B) {
         if (playerDirection == 0) {
             playerDirection = 7;
         } else {
             playerDirection--;
         }
         update_player_tiles();
+        playerTurnCooldown = TURN_COOLDOWN_TIME;
     }
 
 }
@@ -89,11 +97,10 @@ void main(void)
     init();
     while(1) {
         // check input
-        uint8_t pad = waitpad(J_A | J_B);
+        uint8_t pad = joypad();
+        
         turn_player(pad);
         draw_player();
-
-        waitpadup();
         
         // do collision detection
         wait_vbl_done();
