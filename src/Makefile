@@ -1,5 +1,7 @@
 CC	= /opt/gbdk/bin/lcc -Wa-l -Wl-m -Wl-j
 
+SPRITES = sprites/player.o sprites/bullet.o
+
 .PHONY: all clean build game
 all: build
 
@@ -15,8 +17,8 @@ build: main.gb
 %.o:	%.s
 	$(CC) -c -o $@ $<
 
-main.gb: main.o
-	$(CC) -o main.gb main.o
+main.gb: main.o $(SPRITES)
+	$(CC) -o main.gb main.o $(SPRITES)
 
 clean:
 	rm -f *.o *.lst *.map *.gb *~ *.rel *.cdb *.ihx *.lnk *.sym *.asm
