@@ -24,7 +24,7 @@ void init()
     
     // Let palette 1 have light grey as the transparent color:
     OBP1_REG = 0xe1;
-    
+
     update_player_tiles();
 
 
@@ -45,7 +45,7 @@ void update_player_tiles()
 
     for(i = 0; i < 16; i++)
     {
-        set_sprite_tile(PLAYER_SPRITE_START + i, PLAYER_TILE_START + offsets[i]);
+        set_sprite_tile(PLAYER_SPRITE_START + i, PLAYER_TILE_START + playerDirection * 16 + offsets[i]);
         set_sprite_prop(PLAYER_SPRITE_START + i, S_PALETTE);
     }
 }
@@ -92,9 +92,11 @@ void main(void)
     init();
     while(1) {
         // check input
-        uint8_t pad = joypad();
+        uint8_t pad = waitpad(J_A | J_B);
         turn_player(pad);
         draw_player();
+
+        waitpadup();
         
         // do collision detection
         wait_vbl_done();
