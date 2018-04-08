@@ -21,6 +21,10 @@ void init()
 
     // load images here:
     set_sprite_data(PLAYER_TILE_START, sizeof(PLAYER_TILES) / 8, PLAYER_TILES);
+    
+    // Let palette 1 have light grey as the transparent color:
+    OBP1_REG = 0xe1;
+    
     update_player_tiles();
 
 
@@ -42,6 +46,7 @@ void update_player_tiles()
     for(i = 0; i < 16; i++)
     {
         set_sprite_tile(PLAYER_SPRITE_START + i, PLAYER_TILE_START + offsets[i]);
+        set_sprite_prop(PLAYER_SPRITE_START + i, S_PALETTE);
     }
 }
 
