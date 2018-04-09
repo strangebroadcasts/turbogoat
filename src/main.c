@@ -12,8 +12,18 @@ uint8_t playerSubY = 0;
 uint8_t playerDirection = 0;
 
 uint8_t playerTurnCooldown = 0;
+uint8_t playerFireCooldown = 0;
+
+typedef struct bullet {
+    uint8_t x, y, timer, active;
+    signed char velX, velY;
+} bullet_t;
+
+bullet_t playerBullets[PLAYER_BULLET_POOL_SIZE];
+bullet_t enemyBullets[PLAYER_BULLET_POOL_SIZE];
 
 void update_player_tiles();
+void reset_bullets();
 
 void init()
 {
@@ -29,6 +39,7 @@ void init()
     set_sprite_data(ENEMY_TILES_START, ENEMY_TILES_COUNT, ENEMY_TILES);    
 
     update_player_tiles();
+    reset_bullets();
 
     DISPLAY_ON;
 
@@ -50,6 +61,19 @@ void update_player_tiles()
         set_sprite_tile(PLAYER_SPRITE_START + i, PLAYER_TILE_START + playerDirection * 16 + offsets[i]);
         set_sprite_prop(PLAYER_SPRITE_START + i, S_PALETTE);
     }
+}
+
+void reset_bullets()
+{
+    uint8_t i = 0;
+    for(i = 0; i < PLAYER_BULLET_POOL_SIZE; i++)
+    {
+        playerBullets[i].active = 0;
+    }
+    for(i = 0; i < ENEMY_BULLET_POOL_SIZE; i++)
+    {
+        enemyBullets[i].active = 0;
+    } 
 }
 
 void turn_player(uint8_t pad)
@@ -127,6 +151,24 @@ void move_player(uint8_t pad)
         
 }
 
+void update_bullets() {
+    uint8_t i, x, y;
+    if(playerFireCooldown > 0) {
+        playerFireCooldown--;
+    }
+
+    for(i = 0; i < PLAYER_BULLET_POOL_SIZE; i++)
+    {
+        if(!(playerBullets[i].active) && playerFireCooldown == 0) {
+            playerBullets[i].active = 1;
+            // figure out position and velocity here:
+
+        }
+
+        // update position, velocity of bullets
+    }
+}
+
 void main(void)
 {
     init();
@@ -136,9 +178,13 @@ void main(void)
         
         turn_player(pad);
         move_player(pad);
+
+        // do collision detection
+        update_bullets();
+        
+
         draw_player();
         
-        // do collision detection
         wait_vbl_done();
     }
 }

@@ -11,4 +11,6 @@
 #define PLAYER_SPEED_X 80
 #define PLAYER_SPEED_Y 80
 
+#define BULLET_SPEED 40
+
 #endif
